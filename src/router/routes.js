@@ -2,7 +2,23 @@ const routes = [
   {
     path: "/",
     component: () => import("layouts/MainLayout.vue"),
-    children: [{ path: "", component: () => import("pages/IndexPage.vue") }]
+    children: [
+      {
+        path: "",
+        name: "index",
+        component: () => import("pages/IndexPage.vue")
+      },
+      {
+        path: "check/:taskId",
+        name: "check",
+        component: () => import("pages/CheckTaskStatus.vue")
+      },
+      {
+        path: "video/:videoId",
+        name: "info",
+        component: () => import("pages/VideoInfo.vue")
+      }
+    ]
   },
 
   // Always leave this as last one,
