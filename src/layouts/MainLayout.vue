@@ -1,8 +1,12 @@
 <template>
-  <q-layout view="hHh lpr fff">
-    <q-header
+  <q-layout view="hhh lpR fFf">
+    <q-page-container>
+      <router-view />
+    </q-page-container>
+
+    <q-footer
       elevated
-      class="bg-primary text-white"
+      class="bg-grey-8 text-white"
     >
       <q-toolbar>
         <q-toolbar-title>
@@ -12,11 +16,7 @@
           Takina
         </q-toolbar-title>
       </q-toolbar>
-    </q-header>
-
-    <q-page-container>
-      <router-view />
-    </q-page-container>
+    </q-footer>
   </q-layout>
 </template>
 

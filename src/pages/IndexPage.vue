@@ -1,21 +1,25 @@
 <template>
-  <q-input
-    id="searchBox"
-    v-model="state.searchUrl"
-    rounded
-    outlined
-    label="$t('text.searchBoxLabel')"
-    placeholder="$t('text.searchBoxPlaceholder')"
-  >
-    <template #after>
-      <q-btn
-        type="submit"
-        round
-        icon="search"
-        @click="onSubmit"
-      />
-    </template>
-  </q-input>
+  <q-page class="flex flex-center">
+    <q-input
+      id="searchBox"
+      v-model="state.searchUrl"
+      autofocus
+      clearable
+      rounded
+      outlined
+      :label="$t('text.searchBoxLabel')"
+    >
+      <template #prepend>
+        <q-icon name="search" />
+      </template>
+    </q-input>
+    <q-btn
+      label="搜索视频"
+      color="primary"
+      type="submit"
+      @click="onSubmit"
+    />
+  </q-page>
 </template>
 
 <script setup>
