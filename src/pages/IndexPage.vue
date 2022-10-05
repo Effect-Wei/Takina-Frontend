@@ -8,6 +8,7 @@
       rounded
       outlined
       :label="$t('text.searchBoxLabel')"
+      :loading="state.loading"
     >
       <template #prepend>
         <q-icon name="search" />
@@ -25,14 +26,17 @@
 <script setup>
 import { reactive } from "vue"
 import { useRouter } from "vue-router"
+import { useQuasar } from "quasar"
 
 const REGEX_AV_ID = /av\d+/
 const REGEX_BV_ID = /BV\w+/
 
+const $q = useQuasar()
 const router = useRouter()
 const state = reactive({
   searchUrl: null,
-  videoId: null
+  videoId: null,
+  loading: false
 })
 
 async function onSubmit() {
@@ -41,8 +45,15 @@ async function onSubmit() {
     matchObj = REGEX_AV_ID.exec(state.searchUrl)
   }
   if (matchObj == null) {
-    alert("Wrong url!")
+    $q.notify({
+      type: "negative",
+      message: "Wrong url!",
+      progress: true,
+      timeout: 1500
+    })
+    return
   }
+  state.loading = true
   state.videoId = matchObj[0]
   router.push({ name: "info", params: { videoId: state.videoId } })
 }

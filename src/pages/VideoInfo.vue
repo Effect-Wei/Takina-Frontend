@@ -1,9 +1,11 @@
 <script setup>
 import { onMounted, reactive } from "vue"
 import { useRoute } from "vue-router"
+import { useQuasar } from "quasar"
 
 const TAKINA_API = "https://api.takina.one/search"
 
+const $q = useQuasar()
 const route = useRoute()
 const state = reactive({
   loaded: false,
@@ -11,6 +13,8 @@ const state = reactive({
 })
 
 onMounted(async () => {
+  //$q.loading.show({ delay: 200 })
+
   let resp = await fetch(TAKINA_API, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
@@ -20,6 +24,7 @@ onMounted(async () => {
 
   state.videoInfo = jsonObj.video_info
   state.loaded = true
+  $q.loading.hide()
 })
 </script>
 
