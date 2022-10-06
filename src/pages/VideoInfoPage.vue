@@ -1,20 +1,18 @@
 <script setup>
 import { onMounted, reactive } from "vue"
 import { useRoute } from "vue-router"
-import { useQuasar } from "quasar"
+import VideoInfo from "components/VideoInfo.vue"
 
 const TAKINA_API = "https://api.takina.one/search"
 
-const $q = useQuasar()
 const route = useRoute()
 const state = reactive({
   loaded: false,
-  videoInfo: null
+  videoInfo: null,
+  taskHash: null
 })
 
 onMounted(async () => {
-  //$q.loading.show({ delay: 200 })
-
   let resp = await fetch(TAKINA_API, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
@@ -24,32 +22,13 @@ onMounted(async () => {
 
   state.videoInfo = jsonObj.video_info
   state.loaded = true
-  $q.loading.hide()
 })
 </script>
 
 <template>
-  <div v-if="state.loaded">
-    <h2 class="video-title">
-      {{ state.videoInfo.title }}
-    </h2>
-    <br />
-
-    <div class="video-description">
-      {{ state.videoInfo.desc }}
-    </div>
-
-    <q-img
-      :src="state.videoInfo.pic"
-      alt="Video cover"
-      loading="eager"
-      referrerpolicy="no-referrer"
-    />
-  </div>
+  <video-info
+    v-if="state.loaded"
+    :video-info="state.videoInfo"
+    :video-url="route.params.videoId"
+  />
 </template>
-
-<style scope>
-.video-description {
-  white-space: pre-wrap;
-}
-</style>

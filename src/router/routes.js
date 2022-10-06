@@ -16,7 +16,7 @@ const routes = [
       {
         path: "video/:videoId",
         name: "info",
-        component: () => import("pages/VideoInfo.vue")
+        component: () => import("pages/VideoInfoPage.vue")
       }
     ]
   },
