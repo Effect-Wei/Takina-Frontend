@@ -15,6 +15,12 @@
           </q-avatar>
           Takina
         </q-toolbar-title>
+        <q-btn
+          flat
+          round
+          dense
+          icon="translate"
+        />
       </q-toolbar>
     </q-footer>
   </q-layout>
