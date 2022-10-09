@@ -1,25 +1,47 @@
 <template>
-  <q-page class="flex flex-center">
-    <q-input
-      id="searchBox"
-      v-model="state.searchUrl"
-      autofocus
-      clearable
-      rounded
-      outlined
-      :label="$t('text.searchBoxLabel')"
-      :loading="state.loading"
-    >
-      <template #prepend>
-        <q-icon name="search" />
-      </template>
-    </q-input>
-    <q-btn
-      label="搜索视频"
-      color="primary"
-      type="submit"
-      @click="onSubmit"
-    />
+  <q-page class="column">
+    <div class="logo-area column items-center">
+      <img
+        class="logo"
+        src="https://www.google.com/images/branding/googlelogo/1x/googlelogo_light_color_272x92dp.png"
+        alt="Logo"
+        referrerpolicy="no-referrer"
+      />
+    </div>
+
+    <div class="search-area column flex-center">
+      <q-input
+        id="searchBox"
+        v-model="state.searchUrl"
+        class="search-box"
+        autofocus
+        clearable
+        rounded
+        outlined
+        :label="$t('text.searchBoxLabel')"
+        :loading="state.loading"
+      >
+        <template #prepend>
+          <q-icon name="search" />
+        </template>
+      </q-input>
+
+      <div class="flex flex-center button-area">
+        <q-btn
+          class="button"
+          label="查询视频信息"
+          color="primary"
+          type="submit"
+          @click="onSubmit"
+        />
+        <q-btn
+          class="button"
+          label="手气不错"
+          color="primary"
+          type="submit"
+        />
+      </div>
+    </div>
   </q-page>
 </template>
 
@@ -58,3 +80,48 @@ async function onSubmit() {
   router.push({ name: "info", params: { videoId: state.videoId } })
 }
 </script>
+
+<style scope>
+.q-page {
+  height: 100%;
+}
+
+.search-area {
+  padding: 20px;
+}
+
+.search-box {
+  width: 100%;
+  max-width: 584px;
+  padding-top: 6px;
+  margin: 0 auto;
+}
+
+.button {
+  margin: 11px 6px;
+  padding: 0 16px;
+}
+
+.button-area {
+  padding-top: 18px;
+}
+
+.logo {
+  height: 92px;
+  margin-top: auto;
+}
+
+.logo-area {
+  min-height: 92px;
+  max-height: 350px;
+  height: calc(100% - 500px);
+}
+
+body,
+html,
+#q-app,
+.q-layout,
+.q-page-container {
+  height: 100%;
+}
+</style>
