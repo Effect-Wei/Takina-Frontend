@@ -3,7 +3,7 @@
     <div class="logo-area column items-center">
       <img
         class="logo"
-        src="https://www.google.com/images/branding/googlelogo/1x/googlelogo_light_color_272x92dp.png"
+        src="https://cdn.jsdelivr.net/gh/quasarframework/quasar-art/Brand/Logo/RGB/Horizontal/Dark%20background/QUASAR_logo_horizontal_dark_background_RGB.png"
         alt="Logo"
         referrerpolicy="no-referrer"
       />
