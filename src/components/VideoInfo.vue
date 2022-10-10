@@ -9,6 +9,12 @@ const props = defineProps({
   videoUrl: {
     type: String,
     default: ""
+  },
+  addons: {
+    type: Array,
+    default() {
+      return []
+    }
   }
 })
 </script>
