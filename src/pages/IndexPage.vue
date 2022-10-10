@@ -2,14 +2,14 @@
   <q-page class="column">
     <div class="logo-area column items-center">
       <img
-        class="logo"
+        class="logo q-mt-auto"
         src="https://cdn.jsdelivr.net/gh/quasarframework/quasar-art/Brand/Logo/RGB/Horizontal/Dark%20background/QUASAR_logo_horizontal_dark_background_RGB.png"
         alt="Logo"
         referrerpolicy="no-referrer"
       />
     </div>
 
-    <div class="search-area column flex-center">
+    <form class="search-area column flex-center">
       <q-input
         id="searchBox"
         v-model="state.searchUrl"
@@ -32,16 +32,17 @@
           label="查询视频信息"
           color="primary"
           type="submit"
-          @click="onSubmit"
+          @click.prevent="onSubmit"
         />
         <q-btn
           class="button"
           label="手气不错"
           color="primary"
           type="submit"
+          @click.prevent=""
         />
       </div>
-    </div>
+    </form>
   </q-page>
 </template>
 
@@ -107,14 +108,26 @@ async function onSubmit() {
 }
 
 .logo {
-  height: 92px;
-  margin-top: auto;
+  max-height: 92px;
+  max-width: 100%;
 }
 
-.logo-area {
-  min-height: 92px;
-  max-height: 350px;
-  height: calc(100% - 500px);
+@media screen and (min-width: 600px) {
+  .logo-area {
+    padding: 0 30px;
+    min-height: 192px;
+    max-height: 350px;
+    height: calc(100% - 500px);
+  }
+}
+
+@media screen and (max-width: 599.99px) {
+  .logo-area {
+    padding: 0 30px;
+    min-height: 192px;
+    max-height: 250px;
+    height: calc(100% - 600px);
+  }
 }
 
 body,
