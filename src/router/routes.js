@@ -29,7 +29,7 @@ const desktop = [
 const mobile = [
   {
     path: "/",
-    component: () => import("layouts/mobile/MainLayout.vue"),
+    component: () => import("layouts/MainLayout.vue"),
     children: [
       {
         path: "",
