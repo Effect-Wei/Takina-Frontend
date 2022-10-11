@@ -13,22 +13,19 @@ const state = reactive({
 
 onMounted(() => {
   checkStatus(route.params.taskId)
-  if (state.isTaskDone === true) {
-    return
-  }
-  state.intervalId = setInterval(checkStatus, 5000, route.params.taskId)
 })
 
-async function checkStatus(taskHash) {
-  let resp = await fetch(TAKINA_API + "/" + taskHash, { method: "GET" })
+async function checkStatus(taskId) {
+  let resp = await fetch(TAKINA_API + "/" + taskId, { method: "GET" })
   let taskInfo = await resp.json()
   if (taskInfo.msg === "OK") {
     state.dlLink = taskInfo.dl_link
     state.isTaskDone = true
-    if (state.intervalId != null) {
-      clearInterval(state.intervalId)
-    }
+    return
   }
+  setTimeout(() => {
+    checkStatus(taskId)
+  }, 5000)
 }
 </script>
 
