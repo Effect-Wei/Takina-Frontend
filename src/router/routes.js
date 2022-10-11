@@ -50,7 +50,7 @@ const mobile = [
   },
   {
     path: "/:catchAll(.*)*",
-    component: () => import("pages/ErrorNotFound.vue")
+    component: () => import("pages/mobile/ErrorNotFound.vue")
   }
 ]
 
