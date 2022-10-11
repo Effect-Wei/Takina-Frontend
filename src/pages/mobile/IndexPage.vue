@@ -14,7 +14,6 @@
         id="searchBox"
         v-model="state.searchUrl"
         class="search-box"
-        autofocus
         clearable
         rounded
         outlined
@@ -85,16 +84,16 @@ async function onSubmit() {
 <style scope>
 .q-page {
   height: 100%;
+  display: block;
 }
 
 .search-area {
-  padding: 20px;
+  margin: 0 16px;
 }
 
 .search-box {
   width: 100%;
   max-width: 584px;
-  padding-top: 6px;
   margin: 0 auto;
 }
 
@@ -108,26 +107,14 @@ async function onSubmit() {
 }
 
 .logo {
+  margin: 8px 0;
   max-height: 92px;
   max-width: 100%;
 }
 
-@media screen and (min-width: 600px) {
-  .logo-area {
-    padding: 0 30px;
-    min-height: 192px;
-    max-height: 350px;
-    height: calc(100% - 500px);
-  }
-}
-
-@media screen and (max-width: 599.99px) {
-  .logo-area {
-    padding: 0 30px;
-    min-height: 192px;
-    max-height: 250px;
-    height: calc(100% - 600px);
-  }
+.logo-area {
+  padding: 0 60px;
+  margin: 104px auto 18px;
 }
 
 body,

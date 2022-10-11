@@ -112,22 +112,11 @@ async function onSubmit() {
   max-width: 100%;
 }
 
-@media screen and (min-width: 600px) {
-  .logo-area {
-    padding: 0 30px;
-    min-height: 192px;
-    max-height: 350px;
-    height: calc(100% - 500px);
-  }
-}
-
-@media screen and (max-width: 599.99px) {
-  .logo-area {
-    padding: 0 30px;
-    min-height: 192px;
-    max-height: 250px;
-    height: calc(100% - 600px);
-  }
+.logo-area {
+  padding: 0 30px;
+  min-height: 192px;
+  max-height: 350px;
+  height: calc(100% - 500px);
 }
 
 body,
