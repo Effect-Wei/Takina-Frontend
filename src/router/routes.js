@@ -1,4 +1,4 @@
-const routes = [
+const desktop = [
   {
     path: "/",
     component: () => import("layouts/MainLayout.vue"),
@@ -6,27 +6,60 @@ const routes = [
       {
         path: "",
         name: "index",
-        component: () => import("pages/IndexPage.vue")
+        component: () => import("pages/desktop/IndexPage.vue")
       },
       {
         path: "task/:taskId",
         name: "check",
-        component: () => import("pages/CheckTaskStatus.vue")
+        component: () => import("pages/desktop/CheckTaskStatus.vue")
       },
       {
         path: "video/:videoId",
         name: "info",
-        component: () => import("pages/VideoInfoPage.vue")
+        component: () => import("pages/desktop/VideoInfoPage.vue")
       }
     ]
   },
+  {
+    path: "/:catchAll(.*)*",
+    component: () => import("pages/desktop/ErrorNotFound.vue")
+  }
+]
 
-  // Always leave this as last one,
-  // but you can also remove it
+const mobile = [
+  {
+    path: "/",
+    component: () => import("layouts/mobile/MainLayout.vue"),
+    children: [
+      {
+        path: "",
+        name: "index",
+        component: () => import("pages/mobile/IndexPage.vue")
+      },
+      {
+        path: "task/:taskId",
+        name: "check",
+        component: () => import("pages/mobile/CheckTaskStatus.vue")
+      },
+      {
+        path: "video/:videoId",
+        name: "info",
+        component: () => import("pages/mobile/VideoInfoPage.vue")
+      }
+    ]
+  },
   {
     path: "/:catchAll(.*)*",
     component: () => import("pages/ErrorNotFound.vue")
   }
 ]
+
+let routes = []
+
+if (/Android|webOS|iPhone|iPod|BlackBerry/i.test(navigator.userAgent)) {
+  routes = mobile
+} else {
+  routes = desktop
+}
 
 export default routes
