@@ -1,7 +1,7 @@
 <script setup>
 import { onMounted, reactive } from "vue"
 import { useRoute } from "vue-router"
-import VideoInfo from "components/VideoInfo.vue"
+import VideoInfo from "components/VideoInfoMobile.vue"
 
 const TAKINA_API = "https://api.takina.one/search"
 
