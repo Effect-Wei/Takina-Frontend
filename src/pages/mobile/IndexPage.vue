@@ -81,7 +81,7 @@ async function onSubmit() {
 }
 </script>
 
-<style scope>
+<style>
 .q-page {
   height: 100%;
   display: block;
