@@ -35,34 +35,50 @@ const props = defineProps({
     </div>
 
     <div class="column col-7 q-pa-sm">
-      <div class="video-title text-weight-medium">
-        {{ props.videoInfo.title }}
-      </div>
-      <div class="tname flex items-center">
-        {{ props.videoInfo.tname }}
-      </div>
+      <div class="row items-start">
+        <div class="col">
+          <div class="title text-weight-medium">
+            {{ props.videoInfo.title }}
+          </div>
+          <div class="tname flex items-center">
+            {{ props.videoInfo.tname }}
+          </div>
 
-      <div class="row items-center">
-        <q-avatar class="q-ma-sm">
-          <q-img
-            :src="props.videoInfo.owner.face"
-            loading="eager"
-            referrerpolicy="no-referrer"
-          />
-        </q-avatar>
-        <div>
-          {{ props.videoInfo.owner.name }}
+          <div class="description">
+            {{ props.videoInfo.desc }}
+          </div>
         </div>
-      </div>
 
-      <div class="video-description">
-        {{ props.videoInfo.desc }}
+        <div class="column col-auto">
+          <div class="row items-center self-start">
+            <q-avatar class="q-ma-sm">
+              <q-img
+                :src="props.videoInfo.owner.face"
+                loading="eager"
+                referrerpolicy="no-referrer"
+              />
+            </q-avatar>
+            <div class="q-mr-sm">
+              {{ props.videoInfo.owner.name }}
+            </div>
+          </div>
+
+          <div class="button-list">
+            <q-btn
+              no-caps
+              color="bilipink"
+              label="在 Bilibili 观看"
+            />
+          </div>
+        </div>
+
+        <div class="col-1"></div>
       </div>
     </div>
   </div>
 </template>
 
-<style scope>
+<style scoped>
 .header {
   height: 60px;
 }
@@ -73,12 +89,10 @@ const props = defineProps({
   max-width: 1536px;
 }
 
-.video-title {
+.title {
   max-width: 100%;
   font-size: 20px;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
+  white-space: pre-wrap;
 }
 
 .tname {
@@ -88,11 +102,20 @@ const props = defineProps({
   line-height: 18px;
 }
 
-.video-description {
+.description {
+  margin: 20px 0;
+  padding: 0 30px;
   white-space: pre-wrap;
   font-size: 15px;
   letter-spacing: 0;
   line-height: 24px;
   overflow: hidden;
+}
+
+.text-bilipink {
+  color: #fb7299 !important;
+}
+.bg-bilipink {
+  background: #fb7299 !important;
 }
 </style>

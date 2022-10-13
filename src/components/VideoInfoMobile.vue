@@ -57,7 +57,7 @@ const props = defineProps({
   </div>
 </template>
 
-<style scope>
+<style scoped>
 .video-description {
   white-space: pre-line;
   font-size: 15px;
