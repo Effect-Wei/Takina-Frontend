@@ -2,7 +2,7 @@
 import { onMounted, reactive } from "vue"
 import { useRoute } from "vue-router"
 
-const TAKINA_API = "https://api.takina.one/check"
+const TAKINA_API = "https://api.takina.one"
 
 const route = useRoute()
 const state = reactive({
@@ -16,7 +16,9 @@ onMounted(() => {
 })
 
 async function checkStatus(taskId) {
-  let resp = await fetch(TAKINA_API + "/" + taskId, { method: "GET" })
+  let resp = await fetch(`${TAKINA_API}/task/${taskId}/status`, {
+    method: "GET"
+  })
   let taskInfo = await resp.json()
   if (taskInfo.msg === "OK") {
     state.dlLink = taskInfo.dl_link

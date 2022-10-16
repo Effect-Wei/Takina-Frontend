@@ -1,7 +1,7 @@
 <script setup>
 import { computed, reactive } from "vue"
 
-const TAKINA_API = "https://api.takina.one/create"
+const TAKINA_API = "https://api.takina.one/task/create"
 const props = defineProps({
   videoInfo: {
     type: Object,
