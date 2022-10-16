@@ -29,6 +29,6 @@ onMounted(async () => {
   <video-info
     v-if="state.loaded"
     :video-info="state.videoInfo"
-    :video-url="route.params.videoId"
+    :video-id="route.params.videoId"
   />
 </template>
