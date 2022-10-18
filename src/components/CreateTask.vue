@@ -1,7 +1,14 @@
 <script setup>
 import { computed, reactive } from "vue"
+import CloudflareTurnstile from "./CloudflareTurnstile.vue"
 
 const TAKINA_API = "https://api.takina.one/task/create"
+
+const state = reactive({
+  type: "both",
+  quality: computed(() => props.videoInfo.accept_quality[0]),
+  turnstileToken: null
+})
 const props = defineProps({
   videoInfo: {
     type: Object,
@@ -14,24 +21,22 @@ const props = defineProps({
     default: ""
   }
 })
-const state = reactive({
-  type: "both",
-  quality: computed(() => props.videoInfo.accept_quality[0])
-})
+
 const emit = defineEmits(["gotTaskHash"])
 
-async function onSubmit(quality, type) {
+async function onSubmit() {
   let reqJsonObj = {
     url: props.videoUrl.toString(),
-    video_quality: quality.toString(),
+    video_quality: state.quality.toString(),
     audio_quality: "30280",
     require_video: true,
-    require_audio: true
+    require_audio: true,
+    turnstile_token: state.turnstileToken.toString()
   }
 
-  if (type === "v-only") {
+  if (state.type === "v-only") {
     reqJsonObj.require_audio = false
-  } else if (type === "a-only") {
+  } else if (state.type === "a-only") {
     reqJsonObj.require_video = false
   }
 
@@ -94,7 +99,12 @@ async function onSubmit(quality, type) {
       />
       <label for="v-only">仅视频</label>
 
-      <button @click.prevent="onSubmit(state.quality, state.type)">提交</button>
+      <cloudflare-turnstile
+        sitekey="1x00000000000000000000AA"
+        @challenged="(token) => (state.turnstileToken = token)"
+      />
+
+      <button @click.prevent="onSubmit">提交</button>
     </form>
   </main>
 </template>
