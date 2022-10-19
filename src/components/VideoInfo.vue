@@ -51,20 +51,23 @@ const props = defineProps({
           </div>
         </div>
 
-        <div class="column col-auto q-pl-lg">
+        <div class="right-container column col-auto q-ml-lg">
           <staff-info :video-info="props.videoInfo" />
 
-          <div class="tools-list">
+          <div class="tools-list q-pt-md">
+            <create-task
+              v-if="props.addons.includes('CreateTask')"
+              class="task-creator"
+              :video-info="props.videoInfo"
+              :video-url="props.videoId"
+            />
             <q-btn
+              class="bili-button q-my-xs"
               no-caps
               color="bilipink"
               label="在 Bilibili 观看"
               :href="`https://www.bilibili.com/video/${props.videoId}`"
               target="_blank"
-            />
-            <create-task
-              :video-info="props.videoInfo"
-              :video-url="props.videoId"
             />
           </div>
         </div>
@@ -75,7 +78,7 @@ const props = defineProps({
   </div>
 </template>
 
-<style scoped>
+<style scoped lang="scss">
 a {
   text-decoration: none;
   color: #18191c;
@@ -114,14 +117,19 @@ a {
   overflow: hidden;
 }
 
-.tools-list {
-  margin-top: 20px;
+.right-container {
+  min-width: 300px;
+}
+
+.bili-button {
+  width: 130px;
 }
 
 .text-bilipink {
-  color: #fb7299 !important;
+  color: $bilipink !important;
 }
+
 .bg-bilipink {
-  background: #fb7299 !important;
+  background: $bilipink !important;
 }
 </style>

@@ -88,7 +88,7 @@ function switchFold() {
   </div>
 </template>
 
-<style scoped>
+<style scoped lang="scss">
 a {
   text-decoration: none;
   color: #18191c;
@@ -101,7 +101,7 @@ a {
   height: 44px;
   line-height: 44px;
   border-radius: 6px;
-  background-color: #f1f2f3;
+  background: $bg1;
 }
 
 .multiple-staff {

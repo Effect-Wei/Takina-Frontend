@@ -1,13 +1,14 @@
 <script setup>
-import { computed, reactive } from "vue"
+import { onMounted, reactive } from "vue"
 import CloudflareTurnstile from "./CloudflareTurnstile.vue"
 
 const TAKINA_API = "https://api.takina.one/task/create"
 
 const state = reactive({
   type: "both",
-  quality: computed(() => props.videoInfo.accept_quality[0]),
-  turnstileToken: null
+  quality: props.videoInfo.accept_quality[0],
+  turnstileToken: null,
+  qualityOptions: []
 })
 const props = defineProps({
   videoInfo: {
@@ -53,58 +54,83 @@ async function onSubmit() {
       emit("gotTaskHash", taskHash)
     })
 }
+
+onMounted(() => {
+  for (let i = 0; i < props.videoInfo.accept_quality.length; i++) {
+    let option = {
+      label: props.videoInfo.accept_description[i],
+      value: props.videoInfo.accept_quality[i]
+    }
+    state.qualityOptions.push(option)
+  }
+})
 </script>
 
 <template>
-  <main>
-    <form>
-      <label for="quality">清晰度</label>
-      <select
-        id="quality"
-        v-model="state.quality"
-        name="quality"
-      >
-        <option
-          v-for="(quality, index) in videoInfo.accept_quality"
-          :key="index"
-          :value="quality"
-        >
-          {{ videoInfo.accept_description[index] }}
-        </option>
-      </select>
+  <form>
+    <q-select
+      v-model="state.quality"
+      class="quality-selector q-my-xs"
+      :options="state.qualityOptions"
+      bg-color="bg1"
+      label="视频清晰度"
+      emit-value
+      map-options
+      filled
+      dense
+      options-dense
+    />
 
-      <input
-        id="both"
+    <div
+      class="row justify-center q-my-xs"
+      style="padding-right: 10px"
+    >
+      <q-radio
         v-model="state.type"
-        type="radio"
-        name="type"
-        value="both"
-        checked
+        val="both"
+        label="音频和视频"
       />
-      <label for="both">音频和视频</label>
-      <input
-        id="a-only"
+      <q-radio
         v-model="state.type"
-        type="radio"
-        name="type"
-        value="a-only"
+        val="a-only"
+        label="仅音频"
       />
-      <label for="a-only">仅音频</label>
-      <input
-        id="v-only"
+      <q-radio
         v-model="state.type"
-        type="radio"
-        name="type"
-        value="v-only"
+        val="v-only"
+        label="仅视频"
       />
-      <label for="v-only">仅视频</label>
+    </div>
 
-      <cloudflare-turnstile
-        sitekey="1x00000000000000000000AA"
-        @challenged="(token) => (state.turnstileToken = token)"
-      />
+    <cloudflare-turnstile
+      class="cf-turnstile"
+      sitekey="1x00000000000000000000AA"
+      @challenged="(token) => (state.turnstileToken = token)"
+    />
 
-      <button @click.prevent="onSubmit">提交</button>
-    </form>
-  </main>
+    <q-btn
+      class="submit-button q-my-xs"
+      label="提交"
+      color="primary"
+      @click.prevent="onSubmit"
+    />
+  </form>
 </template>
+
+<style lang="scss">
+.cf-turnstile {
+  max-width: 100%;
+}
+
+.submit-button {
+  width: 130px;
+}
+
+.text-bg1 {
+  color: $bg1 !important;
+}
+
+.bg-bg1 {
+  background: $bg1 !important;
+}
+</style>

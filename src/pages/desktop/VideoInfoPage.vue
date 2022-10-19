@@ -30,5 +30,6 @@ onMounted(async () => {
     v-if="state.loaded"
     :video-info="state.videoInfo"
     :video-id="route.params.videoId"
+    :addons="['CreateTask']"
   />
 </template>
