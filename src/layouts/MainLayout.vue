@@ -39,3 +39,21 @@ export default defineComponent({
   }
 })
 </script>
+
+<style lang="scss">
+.text-bilipink {
+  color: $bilipink !important;
+}
+
+.bg-bilipink {
+  background: $bilipink !important;
+}
+
+.text-bg1 {
+  color: $bg1 !important;
+}
+
+.bg-bg1 {
+  background: $bg1 !important;
+}
+</style>

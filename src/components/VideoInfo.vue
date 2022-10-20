@@ -124,12 +124,4 @@ a {
 .bili-button {
   width: 130px;
 }
-
-.text-bilipink {
-  color: $bilipink !important;
-}
-
-.bg-bilipink {
-  background: $bilipink !important;
-}
 </style>
