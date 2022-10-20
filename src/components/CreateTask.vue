@@ -1,9 +1,13 @@
 <script setup>
 import { onMounted, reactive } from "vue"
+import { useRouter } from "vue-router"
+import { useQuasar } from "quasar"
 import CloudflareTurnstile from "./CloudflareTurnstile.vue"
 
 const TAKINA_API = "https://api.takina.one/task/create"
 
+const $q = useQuasar()
+const router = useRouter()
 const state = reactive({
   type: "both",
   quality: props.videoInfo.accept_quality[0],
@@ -16,18 +20,12 @@ const props = defineProps({
     default() {
       return {}
     }
-  },
-  videoUrl: {
-    type: String,
-    default: ""
   }
 })
 
-const emit = defineEmits(["gotTaskHash"])
-
 async function onSubmit() {
-  let reqJsonObj = {
-    url: props.videoUrl.toString(),
+  let reqJson = {
+    url: props.videoInfo.bvid.toString(),
     video_quality: state.quality.toString(),
     audio_quality: "30280",
     require_video: true,
@@ -36,23 +34,29 @@ async function onSubmit() {
   }
 
   if (state.type === "v-only") {
-    reqJsonObj.require_audio = false
+    reqJson.require_audio = false
   } else if (state.type === "a-only") {
-    reqJsonObj.require_video = false
+    reqJson.require_video = false
   }
 
-  await fetch(TAKINA_API, {
+  let resp = await fetch(TAKINA_API, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(reqJsonObj)
+    body: JSON.stringify(reqJson)
   })
-    .then(async (resp) => {
-      let respJsonObj = await resp.json()
-      return respJsonObj.task_hash
+  let respJson = await resp.json()
+
+  if (respJson.msg === "OK" || respJson.msg === "Task exists") {
+    let taskId = respJson.task_hash
+    router.push({ name: "check", params: { taskId: taskId } })
+  } else {
+    $q.notify({
+      type: "negative",
+      message: respJson.msg,
+      progress: true,
+      timeout: 1500
     })
-    .then((taskHash) => {
-      emit("gotTaskHash", taskHash)
-    })
+  }
 }
 
 onMounted(() => {
