@@ -15,12 +15,8 @@
           </q-avatar>
           Takina
         </q-toolbar-title>
-        <q-btn
-          flat
-          round
-          dense
-          icon="translate"
-        />
+
+        <locale-switcher />
       </q-toolbar>
     </q-footer>
   </q-layout>
@@ -28,11 +24,12 @@
 
 <script>
 import { defineComponent } from "vue"
+import LocaleSwitcher from "components/LocaleSwitcher.vue"
 
 export default defineComponent({
   name: "MainLayout",
 
-  components: {},
+  components: { LocaleSwitcher },
 
   setup() {
     return {}
