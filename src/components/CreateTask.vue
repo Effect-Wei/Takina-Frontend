@@ -47,7 +47,7 @@ async function onSubmit() {
   })
   let respJson = await resp.json()
 
-  if (respJson.msg === "OK" || respJson.msg === "Task exists") {
+  if (respJson.msg === "Accepted" || respJson.msg === "Task exists") {
     let taskId = respJson.task_hash
     router.push({ name: "check", params: { taskId: taskId } })
   } else {
