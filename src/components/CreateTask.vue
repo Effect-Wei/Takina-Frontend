@@ -5,6 +5,7 @@ import { useQuasar } from "quasar"
 import CloudflareTurnstile from "./CloudflareTurnstile.vue"
 
 const TAKINA_API = "https://api.takina.one/task/create"
+const TURNSTILE_SITE_KEY = "0x4AAAAAAAAw1JVzDp2feF4x"
 
 const $q = useQuasar()
 const router = useRouter()
@@ -108,7 +109,7 @@ onMounted(() => {
 
     <cloudflare-turnstile
       class="cf-turnstile"
-      sitekey="1x00000000000000000000AA"
+      :sitekey="TURNSTILE_SITE_KEY"
       @challenged="(token) => (state.turnstileToken = token)"
     />
 

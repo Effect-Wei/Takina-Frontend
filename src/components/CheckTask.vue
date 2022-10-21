@@ -48,5 +48,54 @@ async function checkStatus() {
 </script>
 
 <template>
-  <p>Test</p>
+  <div>
+    <div v-if="!state.isTaskDone">
+      <div class="instruction q-my-xs">
+        <span class="text-1">稍等片刻...</span>
+        <span class="text-2">已经等不及了</span>
+      </div>
+      <q-linear-progress
+        v-if="!state.isTaskDone"
+        class="q-my-md"
+        rounded
+        indeterminate
+      />
+    </div>
+
+    <div v-if="state.isTaskDone">
+      <div class="instruction q-my-xs">
+        <span class="text-1">下载可用</span>
+        <span class="text-2">快端上来罢！</span>
+      </div>
+      <q-btn
+        v-if="state.isTaskDone"
+        class="dl-button q-my-xs"
+        label="下载"
+        color="primary"
+        :href="state.dlLink"
+      />
+    </div>
+  </div>
 </template>
+
+<style scoped lang="scss">
+.dl-button {
+  width: 130px;
+}
+
+.instruction {
+  padding: 0 16px;
+  width: 100%;
+  min-width: 250px;
+  height: 36px;
+  line-height: 36px;
+  border-radius: 6px;
+  background: $bg1;
+}
+
+.text-2 {
+  margin-left: 10px;
+  color: #9499a0;
+  text-decoration: line-through;
+}
+</style>
