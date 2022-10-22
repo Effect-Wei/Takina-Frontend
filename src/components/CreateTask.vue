@@ -115,6 +115,7 @@ onMounted(() => {
 
     <q-btn
       class="submit-button q-my-xs"
+      :loading="state.turnstileToken === null"
       label="提交"
       color="primary"
       @click.prevent="onSubmit"
