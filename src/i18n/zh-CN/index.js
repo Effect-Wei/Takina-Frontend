@@ -1,5 +1,6 @@
 export default {
   text: {
-    searchBoxLabel: "视频地址或av/BV号"
+    lang: "简体中文",
+    searchBoxLabel: "视频链接或av/BV号"
   }
 }

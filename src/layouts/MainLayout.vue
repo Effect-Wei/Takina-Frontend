@@ -9,12 +9,18 @@
       class="bg-grey-8 text-white"
     >
       <q-toolbar>
-        <q-toolbar-title>
+        <q-toolbar-title
+          class="toolbar-title"
+          shrink
+          @click="router.push({ name: 'index' })"
+        >
           <q-avatar>
             <img src="https://cdn.quasar.dev/logo-v2/svg/logo-mono-white.svg" />
           </q-avatar>
           Takina
         </q-toolbar-title>
+
+        <q-space />
 
         <locale-switcher />
       </q-toolbar>
@@ -22,22 +28,17 @@
   </q-layout>
 </template>
 
-<script>
-import { defineComponent } from "vue"
+<script setup>
+import { useRouter } from "vue-router"
 import LocaleSwitcher from "components/LocaleSwitcher.vue"
 
-export default defineComponent({
-  name: "MainLayout",
-
-  components: { LocaleSwitcher },
-
-  setup() {
-    return {}
-  }
-})
+const router = useRouter()
 </script>
 
 <style lang="scss">
+.toolbar-title {
+  cursor: pointer;
+}
 .text-bilipink {
   color: $bilipink !important;
 }

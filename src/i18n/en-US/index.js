@@ -1,7 +1,6 @@
-// This is just an example,
-// so you can safely delete all default props below
-
 export default {
-  failed: "Action failed",
-  success: "Action was successful"
+  text: {
+    lang: "English",
+    searchBoxLabel: "Video link or av/BV id"
+  }
 }
