@@ -2,7 +2,8 @@
   "name": "takina-frontend",
   "version": "0.0.1",
   "description": "Frontend of Takina",
-  "productName": "Takina",
+  "productName": "Takina - Bilibili 视频在线下载器",
+  "productDescription": "Bilibili 视频在线下载器，同时支持移动端与 PC 端",
   "author": "Effect-Wei <effect-w@outlook.com>",
   "private": true,
   "scripts": {
