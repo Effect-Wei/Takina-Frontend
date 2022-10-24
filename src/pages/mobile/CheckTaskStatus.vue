@@ -1,51 +1,38 @@
 <script setup>
 import { onMounted, reactive } from "vue"
 import { useRoute } from "vue-router"
+import { useQuasar } from "quasar"
+import VideoInfoMobile from "components/VideoInfoMobile.vue"
 
 const TAKINA_API = "https://api.takina.one"
 
+const $q = useQuasar()
 const route = useRoute()
 const state = reactive({
-  isTaskDone: false,
-  intervalId: null,
-  dlLink: null
+  loaded: false,
+  videoId: null,
+  taskId: route.params.taskId
 })
 
-onMounted(() => {
-  checkStatus(route.params.taskId)
-})
-
-async function checkStatus(taskId) {
-  let resp = await fetch(`${TAKINA_API}/task/${taskId}/status`, {
+onMounted(async () => {
+  let resp = await fetch(`${TAKINA_API}/task/${state.taskId}/info`, {
     method: "GET"
   })
   let taskInfo = await resp.json()
-  if (taskInfo.msg === "OK") {
-    state.dlLink = taskInfo.dl_link
-    state.isTaskDone = true
-    return
-  }
-  setTimeout(() => {
-    checkStatus(taskId)
-  }, 5000)
-}
+
+  state.videoInfo = taskInfo.video_info
+  $q.sessionStorage.set("videoInfo", state.videoInfo)
+  state.videoId = taskInfo.video_info.bvid
+
+  state.loaded = true
+})
 </script>
 
 <template>
-  <q-page class="flex flex-center">
-    <q-circular-progress
-      v-if="!state.isTaskDone"
-      indeterminate
-      rounded
-      size="50px"
-      color="primary"
-      class="q-ma-md"
-    />
-    <q-btn
-      v-if="state.isTaskDone"
-      label="下载"
-      color="primary"
-      :href="state.dlLink"
-    />
-  </q-page>
+  <video-info-mobile
+    v-if="state.loaded"
+    :video-id="state.videoId"
+    :task-id="state.taskId"
+    :addons="['CheckTask']"
+  />
 </template>

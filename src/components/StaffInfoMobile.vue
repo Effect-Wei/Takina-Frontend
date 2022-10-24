@@ -1,10 +1,6 @@
 <script setup>
-import { computed, reactive } from "vue"
+import { computed } from "vue"
 
-const state = reactive({
-  folded: true,
-  rotate: 0
-})
 const props = defineProps({
   videoInfo: {
     type: Object,
@@ -16,45 +12,27 @@ const props = defineProps({
 const onlyOneStaff = computed(() => {
   return props.videoInfo.total_staffs === 1 ? true : false
 })
-
-function switchFold() {
-  state.folded = !state.folded
-  state.rotate += 180
-}
 </script>
 
 <template>
   <div class="staff-info-container">
-    <div
-      :class="{ 'staff-info-header': true, 'multiple-staff': !onlyOneStaff }"
-      @click.prevent="switchFold"
-    >
+    <div class="staff-info-header">
       <span v-if="onlyOneStaff">创作者</span>
       <span v-if="!onlyOneStaff">创作团队</span>
       <span class="total-staff"> {{ props.videoInfo.total_staffs }}人 </span>
-      <q-btn
+      <q-icon
         v-if="!onlyOneStaff"
-        class="fold-switcher"
-        icon="expand_more"
+        class="expand-icon"
+        name="expand_more"
         size="sm"
-        round
-        unelevated
-        :style="`transform: rotate(${state.rotate}deg);`"
       />
     </div>
 
-    <div
-      class="staff-container"
-      :style="
-        state.folded
-          ? 'max-height: 208px;'
-          : `max-height: ${props.videoInfo.total_staffs * 52}px;`
-      "
-    >
+    <div class="staff-container column">
       <div
         v-for="(staff, index) in props.videoInfo.staff"
         :key="index"
-        class="staff-card row items-center self-start"
+        class="staff-card column items-center"
       >
         <a
           :href="`https://space.bilibili.com/${staff.mid}`"
@@ -62,7 +40,7 @@ function switchFold() {
         >
           <q-avatar
             class="q-mx-sm q-my-xs"
-            size="44px"
+            size="10vmin"
           >
             <q-img
               :src="staff.face + '@48w_48h.webp'"
@@ -72,17 +50,16 @@ function switchFold() {
           </q-avatar>
         </a>
 
-        <div class="column flex-center">
-          <div class="staff-name q-mr-sm">
-            <a
-              :href="`https://space.bilibili.com/${staff.mid}`"
-              target="_blank"
-            >
-              {{ staff.name }}
-            </a>
-            <div class="info-tag">
-              {{ staff.title }}
-            </div>
+        <div class="column items-center">
+          <a
+            class="staff-name"
+            :href="`https://space.bilibili.com/${staff.mid}`"
+            target="_blank"
+          >
+            {{ staff.name }}
+          </a>
+          <div class="info-tag">
+            {{ staff.title }}
           </div>
         </div>
       </div>
@@ -99,21 +76,17 @@ a {
 .staff-info-header {
   padding: 0 16px;
   width: 100%;
-  min-width: 250px;
-  height: 44px;
-  line-height: 44px;
+  height: 34px;
+  line-height: 34px;
   border-radius: 6px;
   background: $bg1;
 }
 
-.multiple-staff {
-  cursor: pointer;
-}
-
-.fold-switcher {
-  margin: 7px 0;
+.expand-icon {
+  margin: 5px 0;
   float: right;
   transition: transform 0.3s;
+  transform: rotate(270deg);
 }
 
 .total-staff {
@@ -122,16 +95,21 @@ a {
 }
 
 .staff-container {
-  overflow: hidden;
-  transition: max-height 0.3s ease, background 1s;
+  overflow: auto;
+}
+
+.staff-card {
+  width: 20vmin;
 }
 
 .staff-name {
-  font-size: 13px;
+  font-size: 1vmin;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .info-tag {
-  font-size: 13px;
+  font-size: 1vmin;
   color: #9499a0;
 }
 </style>

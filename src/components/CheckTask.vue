@@ -6,12 +6,15 @@ const TAKINA_API = "https://api.takina.one"
 
 const $q = useQuasar()
 const state = reactive({
-  videoId: null,
   isTaskDone: false,
   dlLink: null
 })
 const props = defineProps({
   taskId: {
+    type: String,
+    default: ""
+  },
+  videoId: {
     type: String,
     default: ""
   }
@@ -51,14 +54,14 @@ async function checkStatus() {
   <div>
     <div
       v-if="!state.isTaskDone"
-      class="instruction q-my-xs"
+      class="instruction q-mt-xs q-mb-sm"
     >
       <span class="text-1">稍等片刻...</span>
       <span class="text-2">已经等不及了</span>
     </div>
     <div
       v-if="state.isTaskDone"
-      class="instruction q-my-xs"
+      class="instruction q-mt-xs q-mb-sm"
     >
       <span class="text-1">下载可用</span>
       <span class="text-2">快端上来罢！</span>
@@ -69,6 +72,14 @@ async function checkStatus() {
       label="下载"
       color="primary"
       :href="state.dlLink"
+    />
+    <q-btn
+      class="bili-button q-my-xs"
+      no-caps
+      color="bilipink"
+      label="在 Bilibili 观看"
+      :href="`https://www.bilibili.com/video/${props.videoId}`"
+      target="_blank"
     />
   </div>
 </template>
@@ -94,8 +105,12 @@ async function checkStatus() {
   text-decoration: line-through;
 }
 
-.progress {
-  margin-top: 24px;
-  margin-bottom: 20px;
+.dl-button {
+  width: 45%;
+}
+
+.bili-button {
+  margin-left: 5%;
+  width: 50%;
 }
 </style>

@@ -112,7 +112,7 @@ onMounted(() => {
     </div>
 
     <cloudflare-turnstile
-      class="cf-turnstile"
+      class="cf-turnstile flex justify-center q-mb-sm"
       :sitekey="TURNSTILE_SITE_KEY"
       @challenged="(token) => (state.turnstileToken = token)"
     />
@@ -124,6 +124,14 @@ onMounted(() => {
       color="primary"
       @click.prevent="onSubmit"
     />
+    <q-btn
+      class="bili-button q-my-xs"
+      no-caps
+      color="bilipink"
+      label="在 Bilibili 观看"
+      :href="`https://www.bilibili.com/video/${props.videoInfo.bvid}`"
+      target="_blank"
+    />
   </form>
 </template>
 
@@ -133,6 +141,11 @@ onMounted(() => {
 }
 
 .submit-button {
-  width: 130px;
+  width: 45%;
+}
+
+.bili-button {
+  margin-left: 5%;
+  width: 50%;
 }
 </style>

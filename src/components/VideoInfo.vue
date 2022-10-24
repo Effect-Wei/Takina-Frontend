@@ -91,14 +91,7 @@ onMounted(async () => {
                 v-if="props.addons.includes('CheckTask')"
                 class="task-checker"
                 :task-id="props.taskId"
-              />
-              <q-btn
-                class="bili-button q-my-xs"
-                no-caps
-                color="bilipink"
-                label="在 Bilibili 观看"
-                :href="`https://www.bilibili.com/video/${props.videoId}`"
-                target="_blank"
+                :video-id="props.videoId"
               />
             </div>
           </div>
@@ -151,9 +144,5 @@ a {
 
 .right-container {
   min-width: 300px;
-}
-
-.bili-button {
-  width: 130px;
 }
 </style>
