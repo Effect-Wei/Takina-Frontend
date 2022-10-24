@@ -13,7 +13,8 @@ const state = reactive({
   type: "both",
   quality: props.videoInfo.accept_quality[0],
   turnstileToken: null,
-  qualityOptions: []
+  qualityOptions: [],
+  sendingReq: false
 })
 const props = defineProps({
   videoInfo: {
@@ -25,6 +26,8 @@ const props = defineProps({
 })
 
 async function onSubmit() {
+  state.sendingReq = true
+
   let reqJson = {
     url: props.videoInfo.bvid.toString(),
     video_quality: state.quality.toString(),
@@ -51,6 +54,7 @@ async function onSubmit() {
     let taskId = respJson.task_hash
     router.push({ name: "check", params: { taskId: taskId } })
   } else {
+    state.sendingReq = false
     $q.notify({
       type: "negative",
       message: respJson.msg,
@@ -115,7 +119,7 @@ onMounted(() => {
 
     <q-btn
       class="submit-button q-my-xs"
-      :loading="state.turnstileToken === null"
+      :loading="state.turnstileToken === null || state.sendingReq"
       label="提交"
       color="primary"
       @click.prevent="onSubmit"
