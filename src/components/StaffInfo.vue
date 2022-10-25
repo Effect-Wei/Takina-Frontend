@@ -123,7 +123,7 @@ a {
 
 .staff-container {
   overflow: hidden;
-  transition: max-height 0.3s ease, background 1s;
+  transition: max-height 0.3s ease;
 }
 
 .staff-name {

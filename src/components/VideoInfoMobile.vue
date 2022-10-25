@@ -1,5 +1,5 @@
 <script setup>
-import { onMounted, reactive } from "vue"
+import { computed, onMounted, reactive } from "vue"
 import { useQuasar } from "quasar"
 import CreateTask from "./CreateTask.vue"
 import CheckTask from "./CheckTask.vue"
@@ -10,7 +10,12 @@ const TAKINA_API = "https://api.takina.one/search"
 const $q = useQuasar()
 const state = reactive({
   loaded: false,
-  videoInfo: $q.sessionStorage.getItem("videoInfo")
+  videoInfo: $q.sessionStorage.getItem("videoInfo"),
+  folded: true,
+  rotate: 0,
+  descHeight: computed(() => {
+    return document.getElementsByClassName("description")[0].offsetHeight
+  })
 })
 const props = defineProps({
   videoId: {
@@ -28,6 +33,11 @@ const props = defineProps({
     }
   }
 })
+
+function switchFold() {
+  state.folded = !state.folded
+  state.rotate += 180
+}
 
 onMounted(async () => {
   if (state.videoInfo != null && state.videoInfo.bvid === props.videoId) {
@@ -59,36 +69,54 @@ onMounted(async () => {
       referrerpolicy="no-referrer"
     />
 
-    <div class="video-info-wrapper row justify-center items-start">
-      <div class="video-info-container">
-        <staff-info-mobile
-          class="staff-info"
-          :video-info="state.videoInfo"
-        />
+    <div class="video-info-wrapper hndrd-prcnt-width row">
+      <staff-info-mobile
+        class="staff-info hndrd-prcnt-width"
+        :video-info="state.videoInfo"
+      />
 
+      <div
+        class="title-area hndrd-prcnt-width"
+        @click.prevent="switchFold"
+      >
+        <q-btn
+          class="fold-switcher"
+          icon="expand_more"
+          size="2.25vmin"
+          round
+          unelevated
+          :style="`transform: rotate(${state.rotate}deg);`"
+        />
         <div class="title">
           {{ state.videoInfo.title }}
         </div>
         <div class="tname flex items-center">
           {{ state.videoInfo.tname }}
         </div>
+      </div>
 
+      <div
+        class="desc-container"
+        :style="
+          state.folded ? 'max-height: 0;' : `max-height: ${state.descHeight}px;`
+        "
+      >
         <div class="description">
           {{ state.videoInfo.desc }}
         </div>
+      </div>
 
-        <div class="tools-list q-pt-md">
-          <create-task
-            v-if="props.addons.includes('CreateTask')"
-            class="task-creator"
-            :video-info="state.videoInfo"
-          />
-          <check-task
-            v-if="props.addons.includes('CheckTask')"
-            class="task-checker"
-            :task-id="props.taskId"
-          />
-        </div>
+      <div class="tools-list hndrd-prcnt-width q-pt-md">
+        <create-task
+          v-if="props.addons.includes('CreateTask')"
+          class="task-creator"
+          :video-info="state.videoInfo"
+        />
+        <check-task
+          v-if="props.addons.includes('CheckTask')"
+          class="task-checker"
+          :task-id="props.taskId"
+        />
       </div>
     </div>
   </div>
@@ -102,8 +130,7 @@ a {
 
 .video-info-wrapper {
   padding: 3.2vmin 3.5vmin 0 3.5vmin;
-  width: 100%;
-  max-width: 1536px;
+  max-width: 1280px;
 }
 
 .title {
@@ -114,26 +141,36 @@ a {
 
 .tname {
   color: #9499a0;
-  height: 20px;
-  font-size: 2.77vmin;
-  line-height: 18px;
+  height: 5.5vmin;
+  font-size: 2.5vmin;
+  line-height: 5vmin;
+}
+
+.fold-switcher {
+  margin: 0px 0;
+  float: right;
+  transition: transform 0.3s;
+}
+
+.desc-container {
+  margin: 3vmin 0 -10px 0;
+  transition: max-height 0.3s ease;
+  overflow: hidden;
 }
 
 .description {
-  margin: 10px 0 -10px 0;
   color: #9499a0;
   white-space: pre-wrap;
   font-size: 3vmin;
   letter-spacing: 0;
   line-height: 5.1vmin;
-  overflow: hidden;
 }
 
 .staff-info {
-  width: 100%;
+  margin-bottom: 3vmin;
 }
 
-.tools-list {
+.hndrd-prcnt-width {
   width: 100%;
 }
 </style>

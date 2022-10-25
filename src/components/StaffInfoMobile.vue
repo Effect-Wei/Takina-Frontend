@@ -28,7 +28,7 @@ const onlyOneStaff = computed(() => {
       />
     </div>
 
-    <div class="staff-container column">
+    <div class="staff-container row">
       <div
         v-for="(staff, index) in props.videoInfo.staff"
         :key="index"
@@ -43,24 +43,22 @@ const onlyOneStaff = computed(() => {
             size="10vmin"
           >
             <q-img
-              :src="staff.face + '@48w_48h.webp'"
+              :src="staff.face + '@96w_96h.webp'"
               loading="eager"
               referrerpolicy="no-referrer"
             />
           </q-avatar>
         </a>
 
-        <div class="column items-center">
-          <a
-            class="staff-name"
-            :href="`https://space.bilibili.com/${staff.mid}`"
-            target="_blank"
-          >
-            {{ staff.name }}
-          </a>
-          <div class="info-tag">
-            {{ staff.title }}
-          </div>
+        <a
+          class="staff-name"
+          :href="`https://space.bilibili.com/${staff.mid}`"
+          target="_blank"
+        >
+          {{ staff.name }}
+        </a>
+        <div class="info-tag">
+          {{ staff.title }}
         </div>
       </div>
     </div>
@@ -74,18 +72,19 @@ a {
 }
 
 .staff-info-header {
+  margin-bottom: 7px;
   padding: 0 16px;
   width: 100%;
-  height: 34px;
-  line-height: 34px;
+  height: 10vmin;
+  font-size: 3.5vmin;
+  line-height: 10vmin;
   border-radius: 6px;
   background: $bg1;
 }
 
 .expand-icon {
-  margin: 5px 0;
+  margin: calc(5vmin - 12px) 0;
   float: right;
-  transition: transform 0.3s;
   transform: rotate(270deg);
 }
 
@@ -95,21 +94,33 @@ a {
 }
 
 .staff-container {
+  width: 100%;
+  flex-wrap: nowrap;
   overflow: auto;
+  scrollbar-width: none;
+}
+
+.staff-container::-webkit-scrollbar {
+  display: none;
 }
 
 .staff-card {
-  width: 20vmin;
+  flex: 0 0 20vmin;
+  margin: 0 1vmin;
+  overflow: hidden;
 }
 
 .staff-name {
-  font-size: 1vmin;
+  max-width: 100%;
+  font-size: 2vmin;
   overflow: hidden;
   text-overflow: ellipsis;
+  white-space: nowrap;
+  display: block;
 }
 
 .info-tag {
-  font-size: 1vmin;
+  font-size: 2vmin;
   color: #9499a0;
 }
 </style>
