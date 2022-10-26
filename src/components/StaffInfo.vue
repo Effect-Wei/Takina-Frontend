@@ -1,9 +1,12 @@
 <script setup>
-import { computed, reactive } from "vue"
+import { computed, reactive, watch } from "vue"
+import { useQuasar } from "quasar"
 
+const $q = useQuasar()
 const state = reactive({
   folded: true,
-  rotate: 0
+  rotate: 0,
+  isDarkActive: $q.dark.isActive
 })
 const props = defineProps({
   videoInfo: {
@@ -17,6 +20,14 @@ const onlyOneStaff = computed(() => {
   return props.videoInfo.total_staffs === 1 ? true : false
 })
 
+watch(
+  () => $q.dark.isActive,
+  (isDarkActive) => {
+    state.isDarkActive = isDarkActive
+    console.log(isDarkActive)
+  }
+)
+
 function switchFold() {
   state.folded = !state.folded
   state.rotate += 180
@@ -26,7 +37,11 @@ function switchFold() {
 <template>
   <div class="staff-info-container">
     <div
-      :class="{ 'staff-info-header': true, 'multiple-staff': !onlyOneStaff }"
+      :class="{
+        'staff-info-header': true,
+        'multiple-staff': !onlyOneStaff,
+        'staff-info-header-dark-bg': state.isDarkActive
+      }"
       @click.prevent="switchFold"
     >
       <span v-if="onlyOneStaff">创作者</span>
@@ -73,8 +88,9 @@ function switchFold() {
         </a>
 
         <div class="column flex-center">
-          <div class="staff-name q-mr-sm">
+          <div class="staff-info q-mr-sm">
             <a
+              :class="{ 'text-white': state.isDarkActive }"
               :href="`https://space.bilibili.com/${staff.mid}`"
               target="_blank"
             >
@@ -106,6 +122,10 @@ a {
   background: $bg1;
 }
 
+.staff-info-header-dark-bg {
+  background: $bg1-dark;
+}
+
 .multiple-staff {
   cursor: pointer;
 }
@@ -126,7 +146,7 @@ a {
   transition: max-height 0.3s ease;
 }
 
-.staff-name {
+.staff-info {
   font-size: 13px;
 }
 

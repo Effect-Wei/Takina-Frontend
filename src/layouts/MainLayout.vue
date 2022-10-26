@@ -6,11 +6,11 @@
 
     <q-footer
       elevated
-      class="bg-grey-8 text-white"
+      class="bg-blue-grey-10"
     >
       <q-toolbar>
         <q-toolbar-title
-          class="toolbar-title"
+          class="toolbar-title text-white"
           shrink
           @click="router.push({ name: 'index' })"
         >
@@ -29,10 +29,21 @@
 </template>
 
 <script setup>
+import { onMounted } from "vue"
 import { useRouter } from "vue-router"
+import { useQuasar } from "quasar"
 import LocaleSwitcher from "components/LocaleSwitcher.vue"
 
+const $q = useQuasar()
 const router = useRouter()
+
+onMounted(() => {
+  let darkMode = $q.localStorage.getItem("darkMode")
+  if (darkMode === null) {
+    darkMode = "auto"
+  }
+  $q.dark.set(darkMode)
+})
 </script>
 
 <style lang="scss">
@@ -53,5 +64,13 @@ const router = useRouter()
 
 .bg-bg1 {
   background: $bg1 !important;
+}
+
+.text-bg1-dark {
+  color: $bg1-dark !important;
+}
+
+.bg-bg1-dark {
+  background: $bg1-dark !important;
 }
 </style>

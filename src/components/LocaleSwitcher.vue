@@ -51,5 +51,6 @@ onMounted(() => {
 <style scoped>
 .locale-list {
   min-width: 128px;
+  background: #ffffff;
 }
 </style>

@@ -1,5 +1,5 @@
 <script setup>
-import { onMounted, reactive } from "vue"
+import { onMounted, reactive, watch } from "vue"
 import { useRouter } from "vue-router"
 import { useQuasar } from "quasar"
 import CloudflareTurnstile from "./CloudflareTurnstile.vue"
@@ -14,7 +14,8 @@ const state = reactive({
   quality: props.videoInfo.accept_quality[0],
   turnstileToken: null,
   qualityOptions: [],
-  sendingReq: false
+  isSendingReq: false,
+  isDarkActive: $q.dark.isActive
 })
 const props = defineProps({
   videoInfo: {
@@ -24,6 +25,14 @@ const props = defineProps({
     }
   }
 })
+
+watch(
+  () => $q.dark.isActive,
+  (isDarkActive) => {
+    state.isDarkActive = isDarkActive
+    console.log(isDarkActive)
+  }
+)
 
 async function onSubmit() {
   state.sendingReq = true
@@ -81,7 +90,9 @@ onMounted(() => {
       v-model="state.quality"
       class="quality-selector q-my-xs"
       :options="state.qualityOptions"
-      bg-color="bg1"
+      :dark="state.isDarkActive"
+      :options-dark="state.isDarkActive"
+      :bg-color="state.isDarkActive ? 'bg1-dark' : 'bg1'"
       label="视频清晰度"
       emit-value
       map-options
@@ -119,7 +130,7 @@ onMounted(() => {
 
     <q-btn
       class="submit-button q-my-xs"
-      :loading="state.turnstileToken === null || state.sendingReq"
+      :loading="state.turnstileToken === null || state.isSendingReq"
       label="提交"
       color="primary"
       @click.prevent="onSubmit"

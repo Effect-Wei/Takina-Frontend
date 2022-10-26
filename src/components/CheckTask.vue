@@ -1,5 +1,5 @@
 <script setup>
-import { onMounted, reactive } from "vue"
+import { onMounted, reactive, watch } from "vue"
 import { useQuasar } from "quasar"
 
 const TAKINA_API = "https://api.takina.one"
@@ -7,7 +7,8 @@ const TAKINA_API = "https://api.takina.one"
 const $q = useQuasar()
 const state = reactive({
   isTaskDone: false,
-  dlLink: null
+  dlLink: null,
+  isDarkActive: $q.dark.isActive
 })
 const props = defineProps({
   taskId: {
@@ -19,6 +20,14 @@ const props = defineProps({
     default: ""
   }
 })
+
+watch(
+  () => $q.dark.isActive,
+  (isDarkActive) => {
+    state.isDarkActive = isDarkActive
+    console.log(isDarkActive)
+  }
+)
 
 onMounted(async () => {
   checkStatus()
@@ -54,14 +63,24 @@ async function checkStatus() {
   <div>
     <div
       v-if="!state.isTaskDone"
-      class="instruction q-mt-xs q-mb-sm"
+      :class="{
+        instruction: true,
+        'q-mt-xs': true,
+        'q-mb-sm': true,
+        'instruction-dark-bg': state.isDarkActive
+      }"
     >
       <span class="text-1">稍等片刻...</span>
       <span class="text-2">已经等不及了</span>
     </div>
     <div
       v-if="state.isTaskDone"
-      class="instruction q-mt-xs q-mb-sm"
+      :class="{
+        instruction: true,
+        'q-mt-xs': true,
+        'q-mb-sm': true,
+        'instruction-dark-bg': state.isDarkActive
+      }"
     >
       <span class="text-1">下载可用</span>
       <span class="text-2">快端上来罢！</span>
@@ -97,6 +116,10 @@ async function checkStatus() {
   line-height: 36px;
   border-radius: 6px;
   background: $bg1;
+}
+
+.instruction-dark-bg {
+  background: $bg1-dark;
 }
 
 .text-2 {
