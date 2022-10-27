@@ -6,7 +6,7 @@
 
     <q-footer
       elevated
-      class="bg-blue-grey-10"
+      :class="footerBg"
     >
       <q-toolbar>
         <q-toolbar-title
@@ -29,13 +29,17 @@
 </template>
 
 <script setup>
-import { onMounted } from "vue"
+import { computed, onMounted } from "vue"
 import { useRouter } from "vue-router"
 import { useQuasar } from "quasar"
 import LocaleSwitcher from "components/LocaleSwitcher.vue"
 
 const $q = useQuasar()
 const router = useRouter()
+
+const footerBg = computed(() => {
+  return $q.dark.isActive ? "bg-light-blue-10" : "bg-cyan-8"
+})
 
 onMounted(() => {
   let darkMode = $q.localStorage.getItem("darkMode")
@@ -50,6 +54,7 @@ onMounted(() => {
 .toolbar-title {
   cursor: pointer;
 }
+
 .text-bilipink {
   color: $bilipink !important;
 }

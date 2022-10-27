@@ -1,5 +1,5 @@
 <script setup>
-import { onMounted, reactive, watch } from "vue"
+import { computed, onMounted, reactive } from "vue"
 import { useRouter } from "vue-router"
 import { useQuasar } from "quasar"
 import CloudflareTurnstile from "./CloudflareTurnstile.vue"
@@ -15,7 +15,9 @@ const state = reactive({
   turnstileToken: null,
   qualityOptions: [],
   isSendingReq: false,
-  isDarkActive: $q.dark.isActive
+  bgColor: computed(() => {
+    return $q.dark.isActive ? "bg1-dark" : "bg1"
+  })
 })
 const props = defineProps({
   videoInfo: {
@@ -25,14 +27,6 @@ const props = defineProps({
     }
   }
 })
-
-watch(
-  () => $q.dark.isActive,
-  (isDarkActive) => {
-    state.isDarkActive = isDarkActive
-    console.log(isDarkActive)
-  }
-)
 
 async function onSubmit() {
   state.sendingReq = true
@@ -90,9 +84,7 @@ onMounted(() => {
       v-model="state.quality"
       class="quality-selector q-my-xs"
       :options="state.qualityOptions"
-      :dark="state.isDarkActive"
-      :options-dark="state.isDarkActive"
-      :bg-color="state.isDarkActive ? 'bg1-dark' : 'bg1'"
+      :bg-color="state.bgColor"
       label="视频清晰度"
       emit-value
       map-options

@@ -1,6 +1,11 @@
 <script setup>
-import { computed } from "vue"
+import { computed, reactive, watch } from "vue"
+import { useQuasar } from "quasar"
 
+const $q = useQuasar()
+const state = reactive({
+  isDarkActive: $q.dark.isActive
+})
 const props = defineProps({
   videoInfo: {
     type: Object,
@@ -12,11 +17,23 @@ const props = defineProps({
 const onlyOneStaff = computed(() => {
   return props.videoInfo.total_staffs === 1 ? true : false
 })
+
+watch(
+  () => $q.dark.isActive,
+  (isDarkActive) => {
+    state.isDarkActive = isDarkActive
+  }
+)
 </script>
 
 <template>
   <div class="staff-info-container">
-    <div class="staff-info-header">
+    <div
+      :class="{
+        'staff-info-header': true,
+        'staff-info-header-dark-bg': state.isDarkActive
+      }"
+    >
       <span v-if="onlyOneStaff">创作者</span>
       <span v-if="!onlyOneStaff">创作团队</span>
       <span class="total-staff"> {{ props.videoInfo.total_staffs }}人 </span>
@@ -80,6 +97,10 @@ a {
   line-height: 10vmin;
   border-radius: 6px;
   background: $bg1;
+}
+
+.staff-info-header-dark-bg {
+  background: $bg1-dark;
 }
 
 .expand-icon {

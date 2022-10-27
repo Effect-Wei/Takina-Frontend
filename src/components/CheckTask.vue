@@ -25,7 +25,6 @@ watch(
   () => $q.dark.isActive,
   (isDarkActive) => {
     state.isDarkActive = isDarkActive
-    console.log(isDarkActive)
   }
 )
 
