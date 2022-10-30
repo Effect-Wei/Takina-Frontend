@@ -10,7 +10,7 @@
     >
       <q-toolbar>
         <q-toolbar-title
-          class="toolbar-title text-white"
+          class="cursor-pointer text-white"
           shrink
           @click="router.push({ name: 'index' })"
         >
@@ -38,7 +38,7 @@ const $q = useQuasar()
 const router = useRouter()
 
 const footerBg = computed(() => {
-  return $q.dark.isActive ? "bg-light-blue-10" : "bg-cyan-8"
+  return $q.dark.isActive ? "bg-light-blue-10" : "bg-blue-9"
 })
 
 onMounted(() => {
@@ -51,10 +51,6 @@ onMounted(() => {
 </script>
 
 <style lang="scss">
-.toolbar-title {
-  cursor: pointer;
-}
-
 .text-bilipink {
   color: $bilipink !important;
 }

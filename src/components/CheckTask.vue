@@ -69,8 +69,8 @@ async function checkStatus() {
         'instruction-dark-bg': state.isDarkActive
       }"
     >
-      <span class="text-1">稍等片刻...</span>
-      <span class="text-2">已经等不及了</span>
+      <span class="text-1">{{ $t("text.waitAsecond") }}</span>
+      <span class="text-2">{{ $t("text.canNotWait") }}</span>
     </div>
     <div
       v-if="state.isTaskDone"
@@ -81,13 +81,13 @@ async function checkStatus() {
         'instruction-dark-bg': state.isDarkActive
       }"
     >
-      <span class="text-1">下载可用</span>
-      <span class="text-2">快端上来罢！</span>
+      <span class="text-1">{{ $t("text.dlAvailable") }}</span>
+      <span class="text-2">{{ $t("text.takeItOut") }}</span>
     </div>
     <q-btn
       class="dl-button q-my-xs"
       :loading="!state.isTaskDone"
-      label="下载"
+      :label="$t('text.download')"
       color="primary"
       :href="state.dlLink"
     />
@@ -95,7 +95,7 @@ async function checkStatus() {
       class="bili-button q-my-xs"
       no-caps
       color="bilipink"
-      label="在 Bilibili 观看"
+      :label="$t('text.watchOnBili')"
       :href="`https://www.bilibili.com/video/${props.videoId}`"
       target="_blank"
     />

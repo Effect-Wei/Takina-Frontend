@@ -29,16 +29,18 @@
       <div class="flex flex-center button-area">
         <q-btn
           class="button"
-          label="查询视频信息"
+          :label="$t('text.queryVideoInfo')"
           color="primary"
           type="submit"
+          no-caps
           @click.prevent="onSubmit"
         />
         <q-btn
           class="button"
-          label="手气不错"
+          :label="$t('text.feelingLucky')"
           color="primary"
           type="submit"
+          no-caps
           @click.prevent=""
         />
       </div>

@@ -144,5 +144,6 @@ a {
 
 .right-container {
   min-width: 300px;
+  max-width: 300px;
 }
 </style>

@@ -34,9 +34,11 @@ watch(
         'staff-info-header-dark-bg': state.isDarkActive
       }"
     >
-      <span v-if="onlyOneStaff">创作者</span>
-      <span v-if="!onlyOneStaff">创作团队</span>
-      <span class="total-staff"> {{ props.videoInfo.total_staffs }}人 </span>
+      <span v-if="onlyOneStaff">{{ $t("text.creator") }}</span>
+      <span v-if="!onlyOneStaff">{{ $t("text.creators") }}</span>
+      <span class="total-staff">
+        {{ props.videoInfo.total_staffs }} {{ $t("text.people") }}
+      </span>
       <q-icon
         v-if="!onlyOneStaff"
         class="expand-icon"
@@ -111,7 +113,7 @@ a {
 
 .total-staff {
   margin-left: 5px;
-  color: #61666d;
+  color: #9499a0;
 }
 
 .staff-container {

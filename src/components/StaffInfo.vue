@@ -38,14 +38,16 @@ function switchFold() {
     <div
       :class="{
         'staff-info-header': true,
-        'multiple-staff': !onlyOneStaff,
+        'cursor-pointer': !onlyOneStaff,
         'staff-info-header-dark-bg': state.isDarkActive
       }"
       @click.prevent="switchFold"
     >
-      <span v-if="onlyOneStaff">创作者</span>
-      <span v-if="!onlyOneStaff">创作团队</span>
-      <span class="total-staff"> {{ props.videoInfo.total_staffs }}人 </span>
+      <span v-if="onlyOneStaff">{{ $t("text.creator") }}</span>
+      <span v-if="!onlyOneStaff">{{ $t("text.creators") }}</span>
+      <span class="total-staff">
+        {{ props.videoInfo.total_staffs }} {{ $t("text.people") }}
+      </span>
       <q-btn
         v-if="!onlyOneStaff"
         class="fold-switcher"
@@ -125,10 +127,6 @@ a {
   background: $bg1-dark;
 }
 
-.multiple-staff {
-  cursor: pointer;
-}
-
 .fold-switcher {
   margin: 7px 0;
   float: right;
@@ -137,7 +135,7 @@ a {
 
 .total-staff {
   margin-left: 5px;
-  color: #61666d;
+  color: #9499a0;
 }
 
 .staff-container {

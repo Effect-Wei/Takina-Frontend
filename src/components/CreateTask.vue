@@ -1,5 +1,5 @@
 <script setup>
-import { computed, onMounted, reactive } from "vue"
+import { computed, onMounted, reactive, watch } from "vue"
 import { useRouter } from "vue-router"
 import { useQuasar } from "quasar"
 import CloudflareTurnstile from "./CloudflareTurnstile.vue"
@@ -15,6 +15,7 @@ const state = reactive({
   turnstileToken: null,
   qualityOptions: [],
   isSendingReq: false,
+  isDarkActive: $q.dark.isActive,
   bgColor: computed(() => {
     return $q.dark.isActive ? "bg1-dark" : "bg1"
   })
@@ -28,8 +29,15 @@ const props = defineProps({
   }
 })
 
+watch(
+  () => $q.dark.isActive,
+  (isDarkActive) => {
+    state.isDarkActive = isDarkActive
+  }
+)
+
 async function onSubmit() {
-  state.sendingReq = true
+  state.isSendingReq = true
 
   let reqJson = {
     url: props.videoInfo.bvid.toString(),
@@ -57,7 +65,7 @@ async function onSubmit() {
     let taskId = respJson.task_hash
     router.push({ name: "check", params: { taskId: taskId } })
   } else {
-    state.sendingReq = false
+    state.isSendingReq = false
     $q.notify({
       type: "negative",
       message: respJson.msg,
@@ -85,7 +93,7 @@ onMounted(() => {
       class="quality-selector q-my-xs"
       :options="state.qualityOptions"
       :bg-color="state.bgColor"
-      label="视频清晰度"
+      :label="$t('text.videoQuality')"
       emit-value
       map-options
       filled
@@ -94,23 +102,31 @@ onMounted(() => {
     />
 
     <div
-      class="row justify-center q-my-xs"
-      style="padding-right: 10px"
+      :class="{
+        'dl-type-wrapper': true,
+        'dl-type-wrapper-dark-bg': state.isDarkActive,
+        'q-my-xs': true
+      }"
     >
-      <q-radio
+      <div class="dl-type">{{ $t("text.dlType") }}</div>
+      <q-option-group
         v-model="state.type"
-        val="both"
-        label="音频和视频"
-      />
-      <q-radio
-        v-model="state.type"
-        val="a-only"
-        label="仅音频"
-      />
-      <q-radio
-        v-model="state.type"
-        val="v-only"
-        label="仅视频"
+        class="dl-type-selector"
+        inline
+        :options="[
+          {
+            label: $t('text.bothAandV'),
+            value: 'both'
+          },
+          {
+            label: $t('text.audioOnly'),
+            value: 'a-only'
+          },
+          {
+            label: $t('text.videoOnly'),
+            value: 'v-only'
+          }
+        ]"
       />
     </div>
 
@@ -123,7 +139,7 @@ onMounted(() => {
     <q-btn
       class="submit-button q-my-xs"
       :loading="state.turnstileToken === null || state.isSendingReq"
-      label="提交"
+      :label="$t('text.submit')"
       color="primary"
       @click.prevent="onSubmit"
     />
@@ -131,7 +147,7 @@ onMounted(() => {
       class="bili-button q-my-xs"
       no-caps
       color="bilipink"
-      label="在 Bilibili 观看"
+      :label="$t('text.watchOnBili')"
       :href="`https://www.bilibili.com/video/${props.videoInfo.bvid}`"
       target="_blank"
     />
@@ -139,6 +155,26 @@ onMounted(() => {
 </template>
 
 <style lang="scss">
+.dl-type-wrapper {
+  border-bottom-right-radius: 4px;
+  border-bottom-left-radius: 4px;
+  background: $bg1;
+}
+
+.dl-type-wrapper-dark-bg {
+  background: $bg1-dark;
+}
+
+.dl-type {
+  margin-left: 10px;
+  font-size: 1px;
+  color: #9499a0;
+}
+
+.dl-type-selector {
+  margin-top: -10px;
+}
+
 .cf-turnstile {
   max-width: 100%;
 }

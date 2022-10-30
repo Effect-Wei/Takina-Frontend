@@ -56,7 +56,7 @@ onMounted(() => {
         @click="switchLocale(targetLocale)"
       >
         <q-item-section>
-          <span v-t="{ path: 'text.lang', locale: targetLocale }"></span>
+          <span v-t="{ path: 'metadata.lang', locale: targetLocale }"></span>
         </q-item-section>
       </q-item>
     </q-list>
