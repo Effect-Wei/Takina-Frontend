@@ -18,6 +18,8 @@ export default {
     creators: "创作团队",
     people: "人",
     canNotWait: "已经等不及了",
-    takeItOut: "快端上来罢！"
+    takeItOut: "快端上来罢！",
+    darkMode: "深色模式",
+    autoDarkMode: "自动深色模式"
   }
 }

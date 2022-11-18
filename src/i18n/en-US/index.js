@@ -18,6 +18,8 @@ export default {
     creators: "Creators",
     people: "people",
     canNotWait: "もう待ちきれないよ",
-    takeItOut: "早く出してくれ！"
+    takeItOut: "早く出してくれ！",
+    darkMode: "Dark Mode",
+    autoDarkMode: "Auto Dark Mode"
   }
 }

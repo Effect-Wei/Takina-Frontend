@@ -22,6 +22,7 @@
 
         <q-space />
 
+        <dark-mode-switcher />
         <locale-switcher />
       </q-toolbar>
     </q-footer>
@@ -29,9 +30,10 @@
 </template>
 
 <script setup>
-import { computed, onMounted } from "vue"
+import { computed } from "vue"
 import { useRouter } from "vue-router"
 import { useQuasar } from "quasar"
+import DarkModeSwitcher from "components/DarkModeSwitcher.vue"
 import LocaleSwitcher from "components/LocaleSwitcher.vue"
 
 const $q = useQuasar()
@@ -39,14 +41,6 @@ const router = useRouter()
 
 const footerBg = computed(() => {
   return $q.dark.isActive ? "bg-light-blue-10" : "bg-blue-9"
-})
-
-onMounted(() => {
-  let darkMode = $q.localStorage.getItem("darkMode")
-  if (darkMode === null) {
-    darkMode = "auto"
-  }
-  $q.dark.set(darkMode)
 })
 </script>
 
