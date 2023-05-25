@@ -43,7 +43,7 @@ watch(
         v-if="!onlyOneStaff"
         class="expand-icon"
         name="expand_more"
-        size="sm"
+        size="xs"
       />
     </div>
 
@@ -58,7 +58,7 @@ watch(
           target="_blank"
         >
           <q-avatar
-            class="q-mx-sm q-my-xs"
+            class="q-mx-sm q-my-sm"
             size="10vmin"
           >
             <q-img
@@ -70,7 +70,10 @@ watch(
         </a>
 
         <a
-          class="staff-name"
+          :class="{
+            'staff-name': true,
+            'text-white': state.isDarkActive
+          }"
           :href="`https://space.bilibili.com/${staff.mid}`"
           target="_blank"
         >
@@ -91,7 +94,7 @@ a {
 }
 
 .staff-info-header {
-  margin-bottom: 7px;
+  margin-bottom: 4px;
   padding: 0 16px;
   width: 100%;
   height: 10vmin;
@@ -106,7 +109,7 @@ a {
 }
 
 .expand-icon {
-  margin: calc(5vmin - 12px) 0;
+  margin: calc(5vmin - 9px) 0;
   float: right;
   transform: rotate(270deg);
 }

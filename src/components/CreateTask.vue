@@ -131,20 +131,20 @@ onMounted(() => {
     </div>
 
     <cloudflare-turnstile
-      class="cf-turnstile flex justify-center q-mb-sm"
+      class="cf-turnstile flex justify-center q-my-sm"
       :sitekey="TURNSTILE_SITE_KEY"
       @challenged="(token) => (state.turnstileToken = token)"
     />
 
     <q-btn
-      class="submit-button q-my-xs"
+      class="submit-button"
       :loading="state.turnstileToken === null || state.isSendingReq"
       :label="$t('text.submit')"
       color="primary"
       @click.prevent="onSubmit"
     />
     <q-btn
-      class="bili-button q-my-xs"
+      class="bili-button"
       no-caps
       color="bilipink"
       :label="$t('text.watchOnBili')"

@@ -32,7 +32,7 @@ onMounted(() => {
 
 <template>
   <q-fab
-    direction="up"
+    direction="down"
     icon="translate"
     padding="10px"
     vertical-actions-align="right"

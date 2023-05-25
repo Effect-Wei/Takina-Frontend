@@ -69,14 +69,14 @@ onMounted(async () => {
       referrerpolicy="no-referrer"
     />
 
-    <div class="video-info-wrapper hndrd-prcnt-width row">
+    <div class="video-info-wrapper full-width row">
       <staff-info-mobile
-        class="staff-info hndrd-prcnt-width"
+        class="full-width"
         :video-info="state.videoInfo"
       />
 
       <div
-        class="title-area hndrd-prcnt-width"
+        class="title-area full-width q-mt-sm"
         @click.prevent="switchFold"
       >
         <q-btn
@@ -98,7 +98,9 @@ onMounted(async () => {
       <div
         class="desc-container"
         :style="
-          state.folded ? 'max-height: 0;' : `max-height: ${state.descHeight}px;`
+          state.folded
+            ? 'max-height: 0px;'
+            : `max-height: ${state.descHeight}px;`
         "
       >
         <div class="description">
@@ -106,7 +108,7 @@ onMounted(async () => {
         </div>
       </div>
 
-      <div class="tools-list hndrd-prcnt-width q-pt-md">
+      <div class="tools-list full-width q-mt-sm">
         <create-task
           v-if="props.addons.includes('CreateTask')"
           class="task-creator"
@@ -129,7 +131,8 @@ a {
 }
 
 .video-info-wrapper {
-  padding: 3.2vmin 3.5vmin 0 3.5vmin;
+  margin-top: 3vmin;
+  padding: 0 3.5vmin 0 3.5vmin;
   max-width: 1280px;
 }
 
@@ -153,7 +156,7 @@ a {
 }
 
 .desc-container {
-  margin: 3vmin 0 -10px 0;
+  padding-top: 1vmin;
   transition: max-height 0.3s ease;
   overflow: hidden;
 }
@@ -163,14 +166,6 @@ a {
   white-space: pre-wrap;
   font-size: 3vmin;
   letter-spacing: 0;
-  line-height: 5.1vmin;
-}
-
-.staff-info {
-  margin-bottom: 3vmin;
-}
-
-.hndrd-prcnt-width {
-  width: 100%;
+  line-height: 5vmin;
 }
 </style>

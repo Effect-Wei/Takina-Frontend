@@ -38,7 +38,7 @@ function switchFold() {
     <div
       :class="{
         'staff-info-header': true,
-        'cursor-pointer': !onlyOneStaff,
+        'cursor-pointer': props.videoInfo.total_staffs > 4,
         'staff-info-header-dark-bg': state.isDarkActive
       }"
       @click.prevent="switchFold"
@@ -49,7 +49,7 @@ function switchFold() {
         {{ props.videoInfo.total_staffs }} {{ $t("text.people") }}
       </span>
       <q-btn
-        v-if="!onlyOneStaff"
+        v-if="props.videoInfo.total_staffs > 4"
         class="fold-switcher"
         icon="expand_more"
         size="sm"
@@ -60,7 +60,7 @@ function switchFold() {
     </div>
 
     <div
-      class="staff-container"
+      class="staff-container q-mt-xs"
       :style="
         state.folded
           ? 'max-height: 208px;'

@@ -85,14 +85,14 @@ async function checkStatus() {
       <span class="text-2">{{ $t("text.takeItOut") }}</span>
     </div>
     <q-btn
-      class="dl-button q-my-xs"
+      class="dl-button"
       :loading="!state.isTaskDone"
       :label="$t('text.download')"
       color="primary"
       :href="state.dlLink"
     />
     <q-btn
-      class="bili-button q-my-xs"
+      class="bili-button"
       no-caps
       color="bilipink"
       :label="$t('text.watchOnBili')"
@@ -103,10 +103,6 @@ async function checkStatus() {
 </template>
 
 <style scoped lang="scss">
-.dl-button {
-  width: 130px;
-}
-
 .instruction {
   padding: 0 16px;
   width: 100%;

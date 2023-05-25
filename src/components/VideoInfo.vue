@@ -50,9 +50,8 @@ onMounted(async () => {
 
 <template>
   <div v-if="state.loaded">
-    <div class="header"></div>
     <div class="video-info-wrapper row justify-center items-start">
-      <div class="cover-area col q-pa-sm">
+      <div class="cover-area col">
         <q-img
           class="cover"
           :src="state.videoInfo.pic"
@@ -61,42 +60,36 @@ onMounted(async () => {
           alt="Video cover"
           referrerpolicy="no-referrer"
         />
+
+        <div class="video-info-container q-mt-md q-px-sm">
+          <div class="title text-weight-medium">
+            {{ state.videoInfo.title }}
+          </div>
+          <div class="tname flex items-center">
+            {{ state.videoInfo.tname }}
+          </div>
+
+          <div class="description q-mt-md q-px-sm">
+            {{ state.videoInfo.desc }}
+          </div>
+        </div>
       </div>
 
-      <div class="column col-7 q-pa-sm">
-        <div class="row items-start">
-          <div class="video-info-container col">
-            <div class="title text-weight-medium">
-              {{ state.videoInfo.title }}
-            </div>
-            <div class="tname flex items-center">
-              {{ state.videoInfo.tname }}
-            </div>
+      <div class="right-container column col-auto q-ml-lg">
+        <staff-info :video-info="state.videoInfo" />
 
-            <div class="description">
-              {{ state.videoInfo.desc }}
-            </div>
-          </div>
-
-          <div class="right-container column col-auto q-ml-lg">
-            <staff-info :video-info="state.videoInfo" />
-
-            <div class="tools-list q-pt-md">
-              <create-task
-                v-if="props.addons.includes('CreateTask')"
-                class="task-creator"
-                :video-info="state.videoInfo"
-              />
-              <check-task
-                v-if="props.addons.includes('CheckTask')"
-                class="task-checker"
-                :task-id="props.taskId"
-                :video-id="props.videoId"
-              />
-            </div>
-          </div>
-
-          <div class="col-1"></div>
+        <div class="tools-list">
+          <create-task
+            v-if="props.addons.includes('CreateTask')"
+            class="task-creator"
+            :video-info="state.videoInfo"
+          />
+          <check-task
+            v-if="props.addons.includes('CheckTask')"
+            class="task-checker"
+            :task-id="props.taskId"
+            :video-id="props.videoId"
+          />
         </div>
       </div>
     </div>
@@ -109,8 +102,8 @@ a {
   color: #18191c;
 }
 
-.header {
-  height: 60px;
+.cover-area {
+  max-width: 50%;
 }
 
 .video-info-wrapper {
@@ -133,12 +126,10 @@ a {
 }
 
 .description {
-  margin: 20px 0;
-  padding: 0 30px;
   white-space: pre-wrap;
-  font-size: 15px;
+  font-size: 14px;
   letter-spacing: 0;
-  line-height: 24px;
+  line-height: 18px;
   overflow: hidden;
 }
 

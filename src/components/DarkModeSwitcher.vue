@@ -40,7 +40,7 @@ onMounted(() => {
 
 <template>
   <q-fab
-    direction="up"
+    direction="down"
     :icon="$q.dark.isActive ? 'dark_mode' : 'light_mode'"
     padding="10px"
     vertical-actions-align="right"

@@ -1,13 +1,6 @@
 <template>
   <q-layout view="hhh lpR fFf">
-    <q-page-container>
-      <router-view />
-    </q-page-container>
-
-    <q-footer
-      elevated
-      :class="footerBg"
-    >
+    <q-header>
       <q-toolbar>
         <q-toolbar-title
           class="cursor-pointer text-white"
@@ -25,23 +18,20 @@
         <dark-mode-switcher />
         <locale-switcher />
       </q-toolbar>
-    </q-footer>
+    </q-header>
+
+    <q-page-container>
+      <router-view class="q-pt-md" />
+    </q-page-container>
   </q-layout>
 </template>
 
 <script setup>
-import { computed } from "vue"
 import { useRouter } from "vue-router"
-import { useQuasar } from "quasar"
 import DarkModeSwitcher from "components/DarkModeSwitcher.vue"
 import LocaleSwitcher from "components/LocaleSwitcher.vue"
 
-const $q = useQuasar()
 const router = useRouter()
-
-const footerBg = computed(() => {
-  return $q.dark.isActive ? "bg-light-blue-10" : "bg-blue-9"
-})
 </script>
 
 <style lang="scss">
